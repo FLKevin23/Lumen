@@ -110,6 +110,66 @@
       color: var(--orange);
     }
 
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-toggle {
+      padding: var(--spacing-xs) var(--spacing-m);
+      background-color: var(--orange);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-toggle:hover {
+      background-color: #D35400;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: var(--spacing-xs);
+      background-color: var(--orange);
+      border-radius: 4px;
+      list-style: none;
+      padding: var(--spacing-xs) 0;
+      min-width: 200px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    }
+
+    .dropdown-menu.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-menu li {
+      padding: 0;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: var(--spacing-xs) var(--spacing-m);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #D35400;
+    }
+
     .client-login-btn {
       padding: var(--spacing-xs) var(--spacing-m);
       background-color: var(--orange);
@@ -495,6 +555,16 @@
         text-align: center;
       }
 
+      .dropdown-menu {
+        position: static;
+        margin-top: var(--spacing-xs);
+        transform: none;
+      }
+
+      .dropdown-menu.active {
+        transform: none;
+      }
+
       h1 {
         font-size: 40px;
       }
@@ -546,12 +616,17 @@
       <nav class="main-navigation">
         <ul>
           <li><a href="#hero">Home</a></li>
-          <li><a href="#value-prop">Value Proposition</a></li>
-          <li><a href="#practice-areas">Practice Areas</a></li>
           <li><a href="#client-portal">Client Portal</a></li>
-          <li><a href="#partners">Partners</a></li>
-          <li><a href="#trust-signals">Trust</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li class="dropdown">
+            <button class="dropdown-toggle">More ▾</button>
+            <ul class="dropdown-menu">
+              <li><a href="#value-prop">Value Proposition</a></li>
+              <li><a href="#practice-areas">Practice Areas</a></li>
+              <li><a href="#partners">Partners</a></li>
+              <li><a href="#trust-signals">Trust</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <div class="header-cta">
@@ -737,6 +812,29 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dropdownToggle = document.querySelector('.dropdown-toggle');
+      const dropdownMenu = document.querySelector('.dropdown-menu');
+      const dropdown = document.querySelector('.dropdown');
+
+      dropdownToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('active');
+      });
+
+      document.addEventListener('click', function(e) {
+        if (!dropdown.contains(e.target)) {
+          dropdownMenu.classList.remove('active');
+        }
+      });
+
+      dropdownMenu.addEventListener('click', function() {
+        dropdownMenu.classList.remove('active');
+      });
+    });
+  </script>
 
 </body>
 </html>
